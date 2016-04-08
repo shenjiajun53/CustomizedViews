@@ -42,27 +42,31 @@ public class ScratchView extends ImageView {
 
     public ScratchView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        setUp();
+        onInit();
     }
 
     public ScratchView(Context context) {
         super(context);
-        setUp();
+        onInit();
     }
 
     public ScratchView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setUp();
+        onInit();
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        Log.e("onMeasure", "width=" + getWidth() + " height=" + getHeight());
+//        Log.e("onMeasure", "mBitmap width=" + mBitmap.getWidth() + "mBitmap height=" + mBitmap.getHeight());
+//        Log.e("onMeasure", "width=" + getMeasuredWidth() + " height=" + getMeasuredHeight());
         rect = new Rect(0, 0, getWidth(), getHeight());
+        if (getHeight() > 0 && getWidth() > 0) {
+            setUp();
+        }
     }
 
-    private void setUp() {
+    private void onInit() {
         mPath = new Path();
         pathPaint = new Paint();
         pathPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
@@ -71,7 +75,7 @@ public class ScratchView extends ImageView {
         pathPaint.setARGB(255, 255, 143, 0);
 
         // 设置混合模式为DST_IN
-        pathPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        pathPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
 
         // 设置画笔风格为描边
         pathPaint.setStyle(Paint.Style.STROKE);
@@ -84,14 +88,9 @@ public class ScratchView extends ImageView {
 
         // 设置描边宽度
         pathPaint.setStrokeWidth(50);
-
-
-//        invalidate();
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
+    private void setUp() {
         // 生成前景图Bitmap
         fgBitmap = Bitmap.createBitmap(rect.width(), rect.height(), Bitmap.Config.ARGB_8888);
 
@@ -101,23 +100,26 @@ public class ScratchView extends ImageView {
         // 绘制画布背景为中性灰
         mCanvas.drawColor(0xFF808080);
 
-        // 获取背景底图Bitmap
-        if (mContext == null) {
+//        // 获取背景底图Bitmap
+//        if (mContext == null) {
+//            return;
+//        }
+//        bgBitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.bare_bears);
+//
+//        // 缩放背景底图Bitmap至屏幕大小
+//        bgBitmap = Bitmap.createScaledBitmap(bgBitmap, rect.width(), rect.height(), true);
+//        invalidate();
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        if (fgBitmap == null) {
             return;
         }
-        bgBitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.bare_bears);
+        canvas.drawBitmap(fgBitmap, 0, 0, null);
 
-        // 缩放背景底图Bitmap至屏幕大小
-        bgBitmap = Bitmap.createScaledBitmap(bgBitmap, rect.width(), rect.height(), true);
-
-
-        Log.e("onDraw", "rect=" + rect.toString());
-        pathPaint.setARGB(255, 63, 81, 181);
-        pathPaint.setStyle(Paint.Style.FILL);
-        canvas.drawRect(rect, pathPaint);
-        pathPaint.setARGB(255, 255, 143, 0);
-        canvas.drawRect(rect, pathPaint);
-        pathPaint.setARGB(255, 255, 143, 0);
+        pathPaint.setARGB(0, 255, 143, 0);
         mCanvas.drawPath(mPath, pathPaint);
     }
 
