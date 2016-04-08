@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">CustomizeViewDemo</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_wave">WaveActivity</string>
+    <string name="title_activity_scratch">ScratchActivity</string>
+    <string name="title_activity_circle_image">CircleImageActivity</string>
+</resources>
