@@ -97,9 +97,11 @@ public class MainActivity extends AppCompatActivity {
                         case 1:
                             intent = new Intent(MainActivity.this, CircleImageActivity.class);
                             startActivity(intent);
+                            break;
                         case 2:
                             intent = new Intent(MainActivity.this, ScratchActivity.class);
                             startActivity(intent);
+                            break;
                         default:
                             break;
                     }
