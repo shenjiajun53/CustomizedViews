@@ -29,6 +29,10 @@
         <activity
             android:name=".CircleImageActivity"
             android:label="@string/title_activity_circle_image"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".DragActivity"
+            android:label="@string/title_activity_drag"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
