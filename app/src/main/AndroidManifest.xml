@@ -33,6 +33,10 @@
         <activity
             android:name=".DragActivity"
             android:label="@string/title_activity_drag"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".DrawerActivity"
+            android:label="@string/title_activity_drawer"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

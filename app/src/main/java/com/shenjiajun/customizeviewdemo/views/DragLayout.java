@@ -15,7 +15,7 @@ import android.widget.TextView;
  */
 public class DragLayout extends LinearLayout {
 
-    private String TAG = "DaggerLayout";
+    private String TAG = "DragLayout";
 
     private ViewDragHelper dragHelper;
 
@@ -128,13 +128,33 @@ public class DragLayout extends LinearLayout {
 
             @Override
             public int clampViewPositionHorizontal(View child, int left, int dx) {
-                Log.e(TAG, "clampViewPositionHorizontal" + "left=" + left + " dx=" + dx);
+
+                final int leftBound = getPaddingLeft();
+                final int rightBound = getWidth() - child.getWidth() - leftBound;
+                if (left < leftBound) {
+                    left = leftBound;
+                }
+                if (left > rightBound) {
+                    left = rightBound;
+                }
+
+                final int newLeft = Math.min(Math.max(left, leftBound), rightBound);
+
+                Log.e(TAG, "clampViewPositionHorizontal left=" + left);
+                Log.e(TAG, "clampViewPositionHorizontal leftBound=" + leftBound);
+                Log.e(TAG, "clampViewPositionHorizontal rightBound=" + rightBound);
+                Log.e(TAG, "clampViewPositionHorizontal newLeft=" + newLeft);
                 return left;
             }
 
             @Override
             public int clampViewPositionVertical(View child, int top, int dy) {
                 Log.e(TAG, "clampViewPositionVertical" + " top=" + top + " dy=" + dy);
+                int topBound = getPaddingTop();
+                if (top < topBound) {
+                    top = topBound;
+                }
+
                 return top;
             }
         });
