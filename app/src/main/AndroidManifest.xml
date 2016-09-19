@@ -37,6 +37,10 @@
         <activity
             android:name=".DrawerActivity"
             android:label="@string/title_activity_drawer"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MyListActivity"
+            android:label="@string/title_activity_my_list"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

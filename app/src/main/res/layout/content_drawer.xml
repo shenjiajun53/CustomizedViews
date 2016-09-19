@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.shenjiajun.customizeviewdemo.views.MyDrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,4 +12,16 @@
     tools:context="com.shenjiajun.customizeviewdemo.DrawerActivity"
     tools:showIn="@layout/activity_drawer">
 
-</RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/drawer_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/holo_green_light"></RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/drawer_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/holo_red_light"></RelativeLayout>
+</com.shenjiajun.customizeviewdemo.views.MyDrawerLayout>

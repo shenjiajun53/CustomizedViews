@@ -59,7 +59,13 @@ public class MyDrawerLayout extends ViewGroup {
             @Override
             public int clampViewPositionHorizontal(View child, int left, int dx) {
                 int newLeft = Math.max(-child.getWidth(), Math.min(left, 0));
-                return newLeft;
+                if (left < -child.getMeasuredWidth()) {
+                    left = -child.getMeasuredWidth();
+                }
+                if (left > 0) {
+                    left = 0;
+                }
+                return left;
             }
 
             @Override
@@ -76,9 +82,12 @@ public class MyDrawerLayout extends ViewGroup {
 
             @Override
             public void onViewReleased(View releasedChild, float xvel, float yvel) {
-                Log.e(TAG, "onViewReleased");
                 final int childWidth = releasedChild.getWidth();
                 float offset = (childWidth + releasedChild.getLeft()) * 1.0f / childWidth;
+                Log.e(TAG, "onViewReleased xvel=" + xvel + " yvel=" + yvel);
+                Log.e(TAG, "onViewReleased releasedChild.getLeft()=" + releasedChild.getLeft());
+                Log.e(TAG, "onViewReleased offset=" + offset);
+
                 mHelper.settleCapturedViewAt(xvel > 0 || xvel == 0 && offset > 0.5f ? 0 : -childWidth, releasedChild.getTop());
                 invalidate();
             }
@@ -91,6 +100,7 @@ public class MyDrawerLayout extends ViewGroup {
                 //offset can callback here
                 changedView.setVisibility(offset == 0 ? View.INVISIBLE : View.VISIBLE);
                 invalidate();
+                Log.e(TAG, "onViewPositionChanged mLeftMenuOnScrren=" + mLeftMenuOnScrren);
             }
 
             @Override
@@ -106,8 +116,35 @@ public class MyDrawerLayout extends ViewGroup {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
         int widthSize = MeasureSpec.getSize(widthMeasureSpec);
         int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+
+        if (widthMode != MeasureSpec.EXACTLY || heightMode != MeasureSpec.EXACTLY) {
+            if (isInEditMode()) {
+                // Don't crash the layout editor. Consume all of the space if specified
+                // or pick a magic number from thin air otherwise.
+                // TODO Better communication with tools of this bogus state.
+                // It will crash on a real device.
+                if (widthMode == MeasureSpec.AT_MOST) {
+                    widthMode = MeasureSpec.EXACTLY;
+                } else if (widthMode == MeasureSpec.UNSPECIFIED) {
+                    widthMode = MeasureSpec.EXACTLY;
+                    widthSize = 300;
+                }
+                if (heightMode == MeasureSpec.AT_MOST) {
+                    heightMode = MeasureSpec.EXACTLY;
+                }
+                else if (heightMode == MeasureSpec.UNSPECIFIED) {
+                    heightMode = MeasureSpec.EXACTLY;
+                    heightSize = 300;
+                }
+            } else {
+                throw new IllegalArgumentException(
+                        "DrawerLayout must be measured with MeasureSpec.EXACTLY.");
+            }
+        }
 
         setMeasuredDimension(widthSize, heightSize);
 
