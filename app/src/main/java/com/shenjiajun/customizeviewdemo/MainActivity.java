@@ -23,7 +23,7 @@ import java.util.TimerTask;
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    private String[] viewNames = {"WaveView", "CircleImageView", "ScratchView", "DragHelperView", "自定义Drawer", "to be continue"};
+    private String[] viewNames = {"WaveView", "CircleImageView", "ScratchView", "DragHelperView", "自定义ViewGroup", "自定义Drawer", "to be continue"};
     MyAdapter myAdapter;
 
     @Override
@@ -107,6 +107,10 @@ public class MainActivity extends AppCompatActivity {
                             startActivity(intent);
                             break;
                         case 4:
+                            intent = new Intent(MainActivity.this, MyListActivity.class);
+                            startActivity(intent);
+                            break;
+                        case 5:
                             intent = new Intent(MainActivity.this, DrawerActivity.class);
                             startActivity(intent);
                             break;

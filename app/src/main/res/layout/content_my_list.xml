@@ -16,55 +16,63 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/text_1"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@android:color/holo_red_light"
-            android:padding="20dp"
-            android:text="回弹"
-            android:textColor="@android:color/white" />
+            android:layout_margin="10dp">
 
-        <TextView
-            android:id="@+id/text_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@android:color/holo_red_light"
-            android:padding="20dp"
-            android:text="回弹"
-            android:textColor="@android:color/white" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/holo_red_light"
+                android:padding="20dp"
+                android:text="回弹"
+                android:textColor="@android:color/white" />
+        </RelativeLayout>
 
-        <TextView
-            android:id="@+id/text_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@android:color/holo_red_light"
-            android:padding="20dp"
-            android:text="回弹"
-            android:textColor="@android:color/white" />
 
-        <TextView
-            android:id="@+id/text_4"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@android:color/holo_red_light"
-            android:padding="20dp"
-            android:text="回弹"
-            android:textColor="@android:color/white" />
+            android:layout_margin="10dp">
 
-        <TextView
-            android:id="@+id/text_5"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/holo_red_light"
+                android:padding="20dp"
+                android:text="回弹"
+                android:textColor="@android:color/white" />
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@android:color/holo_red_light"
-            android:padding="20dp"
-            android:text="回弹"
-            android:textColor="@android:color/white" />
+            android:layout_margin="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/holo_red_light"
+                android:padding="20dp"
+                android:text="回弹"
+                android:textColor="@android:color/white" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/holo_red_light"
+                android:padding="20dp"
+                android:text="回弹"
+                android:textColor="@android:color/white" />
+        </RelativeLayout>
+
     </com.shenjiajun.customizeviewdemo.views.MyListLayout>
 
 </RelativeLayout>
