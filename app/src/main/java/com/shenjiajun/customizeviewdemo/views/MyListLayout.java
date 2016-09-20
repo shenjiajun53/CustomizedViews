@@ -46,9 +46,9 @@ public class MyListLayout extends ViewGroup {
 
         View child1 = getChildAt(0);
 
-//        final LayoutParams marginLayoutParams = child1.getLayoutParams();
+        final LayoutParams marginLayoutParams = child1.getLayoutParams();
 //
-//        final MarginLayoutParams marginLayoutParams1 = (MarginLayoutParams) marginLayoutParams;
+        final MarginLayoutParams marginLayoutParams1 = (MarginLayoutParams) marginLayoutParams;
 
         for (int i = 0; i < childCount; i++) {
             View childView = getChildAt(i);
