@@ -42,35 +42,54 @@ public class MyListLayout extends ViewGroup {
         int maxHeight = 0;
 
         int childCount = getChildCount();
+//        measureChildren(widthMeasureSpec, heightMeasureSpec);
+
+        View child1 = getChildAt(0);
+
+//        final LayoutParams marginLayoutParams = child1.getLayoutParams();
+//
+//        final MarginLayoutParams marginLayoutParams1 = (MarginLayoutParams) marginLayoutParams;
+
         for (int i = 0; i < childCount; i++) {
             View childView = getChildAt(i);
             if (childView.getVisibility() == GONE) {
                 continue;
             }
 
-//            MarginLayoutParams lp = (MarginLayoutParams)
-//                    childView.getLayoutParams();
-
-            measureChildWithMargins(childView, widthMeasureSpec, 0, heightMeasureSpec, 0);
-
-            MarginLayoutParams marginLayoutParams = (MarginLayoutParams) childView.getLayoutParams();
+            measureChild(childView, widthMeasureSpec, heightMeasureSpec);
 
 
             if (maxWidth < childView.getMeasuredWidth()) {
                 maxWidth = childView.getMeasuredWidth();
             }
-            maxHeight += childView.getMeasuredHeight() + marginLayoutParams.bottomMargin + marginLayoutParams.topMargin;
+            maxHeight += childView.getMeasuredHeight();
 
         }
 
-        setMeasuredDimension(maxWidth, maxHeight);
+        if (widthMode == MeasureSpec.EXACTLY && heightMode == MeasureSpec.EXACTLY) {
+            setMeasuredDimension(widthSize, heightSize);
+        } else if (widthMode == MeasureSpec.EXACTLY) {
+            setMeasuredDimension(widthSize, maxHeight);
+        } else if (heightMode == MeasureSpec.EXACTLY) {
+            setMeasuredDimension(maxWidth, heightSize);
+        } else {
+            setMeasuredDimension(maxWidth, maxHeight);
+        }
+
     }
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-
         int maxWidth = 0;
         int maxHeight = 0;
+
+        int paddingLeft = getPaddingLeft();
+        int paddingTop = getPaddingTop();
+        int paddingRight = getPaddingRight();
+        int paddingBottom = getPaddingBottom();
+
+//        int paddingH = paddingLeft + paddingRight;
+//        int paddingV = paddingTop + paddingBottom;
 
         int childCount = getChildCount();
         for (int i = 0; i < childCount; i++) {
@@ -79,16 +98,17 @@ public class MyListLayout extends ViewGroup {
                 continue;
             }
 
-            MarginLayoutParams marginLayoutParams = (MarginLayoutParams) childView.getLayoutParams();
+//            MarginLayoutParams marginLayoutParams = (MarginLayoutParams) childView.getLayoutParams();
 
 
 //            if (maxWidth < childView.getMeasuredWidth()) {
 //                maxWidth = childView.getMeasuredWidth();
 //            }
-            maxHeight += childView.getMeasuredHeight() + marginLayoutParams.bottomMargin + marginLayoutParams.topMargin;
 
-            childView.layout(marginLayoutParams.leftMargin, marginLayoutParams.topMargin + maxHeight
-                    , childView.getMeasuredWidth(), childView.getMeasuredHeight() + maxHeight);
+            childView.layout(0 + paddingLeft, 0 + maxHeight + paddingTop
+                    , childView.getMeasuredWidth() + paddingLeft, childView.getMeasuredHeight() + maxHeight + paddingTop);
+
+            maxHeight += childView.getMeasuredHeight();
         }
     }
 }
