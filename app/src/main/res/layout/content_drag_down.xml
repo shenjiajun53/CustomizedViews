@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_drag_down"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.shenjiajun.customizeviewdemo.DragDownActivity"
+    tools:showIn="@layout/activity_drag_down">
+
+    <com.shenjiajun.customizeviewdemo.views.DragDownLayout
+        android:id="@+id/drag_down_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/drag_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dispaly_view"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:background="@android:color/holo_green_light"></RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/drag_anchor_layout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@android:color/holo_red_light"></RelativeLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/dispaly_view"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_alignParentTop="true"
+            android:background="@android:color/holo_blue_light"></RelativeLayout>
+
+
+    </com.shenjiajun.customizeviewdemo.views.DragDownLayout>
+
+</RelativeLayout>

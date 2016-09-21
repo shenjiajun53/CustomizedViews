@@ -41,6 +41,10 @@
         <activity
             android:name=".MyListActivity"
             android:label="@string/title_activity_my_list"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".DragDownActivity"
+            android:label="@string/title_activity_drag_down"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

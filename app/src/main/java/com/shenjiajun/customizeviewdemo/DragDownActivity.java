@@ -5,36 +5,46 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RelativeLayout;
 
-import com.shenjiajun.customizeviewdemo.views.MyDrawerLayout;
+import com.shenjiajun.customizeviewdemo.views.DragDownLayout;
 
-public class DrawerActivity extends AppCompatActivity implements View.OnClickListener {
+public class DragDownActivity extends AppCompatActivity {
 
-    private String TAG = "DrawerActivity";
-
-    MyDrawerLayout drawerLayout;
+    private DragDownLayout dragDownLayout;
+    private RelativeLayout dragAnchor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_drawer);
+        setContentView(R.layout.activity_drag_down);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        drawerLayout = (MyDrawerLayout) findViewById(R.id.my_drawer_layout);
+        dragDownLayout = (DragDownLayout) findViewById(R.id.drag_down_layout);
+        dragAnchor = (RelativeLayout) findViewById(R.id.drag_anchor_layout);
+        dragAnchor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (dragDownLayout.isDroped()) {
+                    dragDownLayout.slideUp();
+                } else {
+                    dragDownLayout.dropDown();
+                }
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (drawerLayout.getmLeftMenuOnScrren() > 0.5) {
-                    drawerLayout.closeDrawer();
+                if (dragDownLayout.isDroped()) {
+                    dragDownLayout.slideUp();
                 } else {
-                    drawerLayout.openDrawer();
+                    dragDownLayout.dropDown();
                 }
             }
         });
@@ -50,12 +60,4 @@ public class DrawerActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            default:
-                break;
-        }
-    }
 }

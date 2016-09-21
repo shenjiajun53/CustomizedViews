@@ -105,7 +105,7 @@ public class MyListLayout extends ViewGroup {
 //                maxWidth = childView.getMeasuredWidth();
 //            }
 
-            childView.layout(0 + paddingLeft + lp.leftMargin, 0 + maxHeight + paddingTop + lp.topMargin
+            childView.layout(paddingLeft + lp.leftMargin, maxHeight + paddingTop + lp.topMargin
                     , childView.getMeasuredWidth() + paddingLeft + lp.leftMargin, childView.getMeasuredHeight() + maxHeight + paddingTop + lp.topMargin);
 
             maxHeight += childView.getMeasuredHeight() + lp.topMargin + lp.bottomMargin;

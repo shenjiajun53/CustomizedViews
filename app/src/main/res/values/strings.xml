@@ -7,4 +7,5 @@
     <string name="title_activity_drag">DragActivity</string>
     <string name="title_activity_drawer">DrawerActivity</string>
     <string name="title_activity_my_list">MyListActivity</string>
+    <string name="title_activity_drag_down">DragDownActivity</string>
 </resources>

@@ -135,8 +135,7 @@ public class MyDrawerLayout extends ViewGroup {
                 }
                 if (heightMode == MeasureSpec.AT_MOST) {
                     heightMode = MeasureSpec.EXACTLY;
-                }
-                else if (heightMode == MeasureSpec.UNSPECIFIED) {
+                } else if (heightMode == MeasureSpec.UNSPECIFIED) {
                     heightMode = MeasureSpec.EXACTLY;
                     heightSize = 300;
                 }
@@ -214,16 +213,28 @@ public class MyDrawerLayout extends ViewGroup {
         }
     }
 
+    public float getmLeftMenuOnScrren() {
+        return mLeftMenuOnScrren;
+    }
+
+    public void setmLeftMenuOnScrren(float mLeftMenuOnScrren) {
+        this.mLeftMenuOnScrren = mLeftMenuOnScrren;
+    }
+
     public void closeDrawer() {
+        Log.e(TAG, "closeDrawer");
         View menuView = mLeftMenuView;
         mLeftMenuOnScrren = 0.f;
         mHelper.smoothSlideViewTo(menuView, -menuView.getWidth(), menuView.getTop());
+        invalidate();
     }
 
     public void openDrawer() {
+        Log.e(TAG, "openDrawer");
         View menuView = mLeftMenuView;
         mLeftMenuOnScrren = 1.0f;
         mHelper.smoothSlideViewTo(menuView, 0, menuView.getTop());
+        invalidate();
     }
 
     @Override
