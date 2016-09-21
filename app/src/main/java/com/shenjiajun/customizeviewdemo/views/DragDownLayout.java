@@ -48,6 +48,8 @@ public class DragDownLayout extends RelativeLayout {
 
     private boolean isInited = false;
 
+    private int lastDy = 0;
+
     public DragDownLayout(Context context) {
         super(context);
         initView();
@@ -94,6 +96,8 @@ public class DragDownLayout extends RelativeLayout {
             public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
                 Log.e(TAG, "onViewPositionChanged left=" + left + " top=" + top + " dx=" + dx + " dy=" + dy);
                 super.onViewPositionChanged(changedView, left, top, dx, dy);
+                lastDy = dragStartPos - top;
+//                requestLayout();
             }
 
             @Override
@@ -105,6 +109,7 @@ public class DragDownLayout extends RelativeLayout {
             @Override
             public void onViewReleased(View releasedChild, float xvel, float yvel) {
                 int dy = dragStartPos - releasedChild.getTop();
+                Log.e(TAG, "onViewReleased top=" + releasedChild.getTop());
                 Log.e(TAG, "onViewReleased dy=" + dy + " contentHeight=" + dragContentHeight);
                 float offset = (dragContentHeight - dy) * 1.0f / dragContentHeight;
                 Log.e(TAG, "onViewReleased xvel=" + xvel + " yvel=" + yvel);
@@ -172,12 +177,28 @@ public class DragDownLayout extends RelativeLayout {
         dragStartPos = startHeight;
         dragEndPos = endHeight;
 
-//        if (!isDroped && !isInited) {
-//            isInited = true;
-////            dragView.scrollBy(0, dragContentHeight);
-////            dragView.setY((- dragContentHeight));
-//            dragHelper.smoothSlideViewTo(dragView, 0, (dragStartPos - dragContentHeight));
-//            invalidate();
+
+//        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+//        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+//        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+//        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+//
+//        int paddingLeft = getPaddingLeft();
+//        int paddingTop = getPaddingTop();
+//        int paddingRight = getPaddingRight();
+//        int paddingBottom = getPaddingBottom();
+//
+//        int maxWidth = 0;
+//        int maxHeight = 0;
+//
+//        maxHeight = (dragContentHeight - lastDy) + dragStartPos + dragAnchorHeight;
+//
+//        Log.e(TAG, "maxHeight=" + maxHeight);
+//
+//        if (heightMode == MeasureSpec.EXACTLY) {
+//            setMeasuredDimension(widthSize, heightSize);
+//        } else {
+//            setMeasuredDimension(widthSize, maxHeight);
 //        }
     }
 
@@ -203,6 +224,8 @@ public class DragDownLayout extends RelativeLayout {
                     (dragStartPos - dragContentHeight) + paddingTop + lp.topMargin,
                     dragView.getMeasuredWidth() + paddingLeft + lp.leftMargin,
                     dragView.getMeasuredHeight() + (dragStartPos - dragContentHeight) + paddingTop + lp.topMargin);
+
+            lastDy = dragContentHeight;
         }
     }
 

@@ -16,7 +16,7 @@
     <com.shenjiajun.customizeviewdemo.views.DragDownLayout
         android:id="@+id/drag_down_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/drag_view"
@@ -27,7 +27,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="200dp"
                 android:background="@android:color/holo_green_light"></RelativeLayout>
 
             <RelativeLayout
@@ -35,6 +35,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@android:color/holo_red_light"></RelativeLayout>
+
+
         </LinearLayout>
 
         <RelativeLayout
@@ -46,5 +48,13 @@
 
 
     </com.shenjiajun.customizeviewdemo.views.DragDownLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/drag_down_layout"
+        android:background="@color/amber_900"
+        android:visibility="gone"></RelativeLayout>
 
 </RelativeLayout>
