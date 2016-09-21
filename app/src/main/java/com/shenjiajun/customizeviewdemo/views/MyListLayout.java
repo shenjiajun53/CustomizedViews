@@ -38,17 +38,15 @@ public class MyListLayout extends ViewGroup {
         int heightSize = MeasureSpec.getSize(heightMeasureSpec);
         int heightMode = MeasureSpec.getMode(heightMeasureSpec);
 
+        int paddingLeft = getPaddingLeft();
+        int paddingTop = getPaddingTop();
+        int paddingRight = getPaddingRight();
+        int paddingBottom = getPaddingBottom();
+
         int maxWidth = 0;
         int maxHeight = 0;
 
         int childCount = getChildCount();
-//        measureChildren(widthMeasureSpec, heightMeasureSpec);
-
-        View child1 = getChildAt(0);
-
-        final LayoutParams marginLayoutParams = child1.getLayoutParams();
-//
-        final MarginLayoutParams marginLayoutParams1 = (MarginLayoutParams) marginLayoutParams;
 
         for (int i = 0; i < childCount; i++) {
             View childView = getChildAt(i);
@@ -56,15 +54,17 @@ public class MyListLayout extends ViewGroup {
                 continue;
             }
 
-            measureChild(childView, widthMeasureSpec, heightMeasureSpec);
+            measureChildWithMargins(childView, widthMeasureSpec, 0, heightMeasureSpec, 0);
 
+            MarginLayoutParams lp = (MarginLayoutParams) childView.getLayoutParams();
 
             if (maxWidth < childView.getMeasuredWidth()) {
-                maxWidth = childView.getMeasuredWidth();
+                maxWidth = childView.getMeasuredWidth() + lp.leftMargin + lp.rightMargin;
             }
-            maxHeight += childView.getMeasuredHeight();
-
+            maxHeight += childView.getMeasuredHeight() + lp.topMargin + lp.bottomMargin;
         }
+
+        maxHeight += paddingBottom + paddingTop;
 
         if (widthMode == MeasureSpec.EXACTLY && heightMode == MeasureSpec.EXACTLY) {
             setMeasuredDimension(widthSize, heightSize);
@@ -98,17 +98,37 @@ public class MyListLayout extends ViewGroup {
                 continue;
             }
 
-//            MarginLayoutParams marginLayoutParams = (MarginLayoutParams) childView.getLayoutParams();
+            MarginLayoutParams lp = (MarginLayoutParams) childView.getLayoutParams();
 
 
 //            if (maxWidth < childView.getMeasuredWidth()) {
 //                maxWidth = childView.getMeasuredWidth();
 //            }
 
-            childView.layout(0 + paddingLeft, 0 + maxHeight + paddingTop
-                    , childView.getMeasuredWidth() + paddingLeft, childView.getMeasuredHeight() + maxHeight + paddingTop);
+            childView.layout(0 + paddingLeft + lp.leftMargin, 0 + maxHeight + paddingTop + lp.topMargin
+                    , childView.getMeasuredWidth() + paddingLeft + lp.leftMargin, childView.getMeasuredHeight() + maxHeight + paddingTop + lp.topMargin);
 
-            maxHeight += childView.getMeasuredHeight();
+            maxHeight += childView.getMeasuredHeight() + lp.topMargin + lp.bottomMargin;
         }
+    }
+
+    @Override
+    public LayoutParams generateLayoutParams(AttributeSet attrs) {
+        return new MarginLayoutParams(getContext(), attrs);
+    }
+
+    @Override
+    protected LayoutParams generateLayoutParams(LayoutParams p) {
+        return new MarginLayoutParams(p);
+    }
+
+    @Override
+    protected LayoutParams generateDefaultLayoutParams() {
+        return new MarginLayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+    }
+
+    @Override
+    protected boolean checkLayoutParams(LayoutParams p) {
+        return p instanceof MarginLayoutParams;
     }
 }
