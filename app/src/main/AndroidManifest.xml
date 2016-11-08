@@ -45,6 +45,10 @@
         <activity
             android:name=".DragDownActivity"
             android:label="@string/title_activity_drag_down"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".GradientTextActivity"
+            android:label="@string/title_activity_gradient_text"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
