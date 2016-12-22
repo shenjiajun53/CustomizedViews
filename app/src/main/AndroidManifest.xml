@@ -49,6 +49,10 @@
         <activity
             android:name=".GradientTextActivity"
             android:label="@string/title_activity_gradient_text"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".NestedBehaviorActivity"
+            android:label="@string/title_activity_nested_behavior"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
