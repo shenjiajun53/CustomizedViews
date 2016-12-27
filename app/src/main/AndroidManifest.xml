@@ -53,6 +53,10 @@
         <activity
             android:name=".NestedBehaviorActivity"
             android:label="@string/title_activity_nested_behavior"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MarqueeActivity"
+            android:label="@string/title_activity_marquee"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

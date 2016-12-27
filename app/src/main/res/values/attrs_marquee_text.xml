@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MarqueeTextView">
+        <!--垂直切换时间-->
+        <attr name="vertical_switch_speed" format="integer" />
+        <!--垂直切换间隔-->
+        <attr name="vertical_switch_interval" format="integer" />
+        <!--水平滚动时间-->
+        <attr name="horizontal_scroll_speed" format="integer" />
+        <!--水平滚动间隔-->
+        <attr name="horizontal_scroll_interval" format="integer" />
+        <!--内容文字颜色-->
+        <attr name="content_text_size" format="dimension" />
+        <!--内容文字大小-->
+        <attr name="content_text_color" format="color" />
+    </declare-styleable>
+</resources>

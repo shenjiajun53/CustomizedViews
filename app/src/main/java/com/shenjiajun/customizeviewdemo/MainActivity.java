@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private String[] viewNames =
             {"WaveView", "CircleImageView", "ScratchView"
                     , "自定义ViewGroup", "DragHelperView", "自定义Drawer"
-                    , "自定义下拉", "GradientTextView"
+                    , "自定义下拉", "GradientTextView", "自定义双向跑马灯"
 
                     , "to be continue"};
     MyAdapter myAdapter;
@@ -127,7 +127,10 @@ public class MainActivity extends AppCompatActivity {
                             intent = new Intent(MainActivity.this, GradientTextActivity.class);
                             startActivity(intent);
                             break;
-
+                        case 8:
+                            intent = new Intent(MainActivity.this, MarqueeActivity.class);
+                            startActivity(intent);
+                            break;
                         default:
                             break;
                     }
