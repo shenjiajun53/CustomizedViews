@@ -57,6 +57,10 @@
         <activity
             android:name=".MarqueeActivity"
             android:label="@string/title_activity_marquee"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".LuckWheelActivity"
+            android:label="@string/title_activity_luck_wheel"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
