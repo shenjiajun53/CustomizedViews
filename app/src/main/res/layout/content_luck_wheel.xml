@@ -16,7 +16,12 @@
     <com.shenjiajun.customizeviewdemo.views.LuckyWheelView
         android:id="@+id/lucky_wheel"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        app:item_content_color="@color/grey_200"
+        app:item_title_color="@color/material_red_700"
+        app:line_color="@color/material_lightBlue_700"
+        app:selected_color="@color/material_white"
+        app:un_select_color="@color/amber_700" />
 
     <Button
         android:id="@+id/controler1"

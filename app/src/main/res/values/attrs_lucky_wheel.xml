@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="LuckyWheelView">
+        <attr name="interval_line_width" format="dimension" />
+        <attr name="circle_line_width" format="dimension" />
+
+        <attr name="item_title_text_size" format="dimension" />
+        <attr name="item_content_text_size" format="dimension" />
+
+        <attr name="item_title_color" format="color" />
+        <attr name="item_content_color" format="color" />
+        <attr name="line_color" format="color" />
+        <attr name="un_select_color" format="color" />
+        <attr name="selected_color" format="color" />
+    </declare-styleable>
+</resources>
