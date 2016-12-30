@@ -1,56 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/content_luck_wheel"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.shenjiajun.customizeviewdemo.LuckWheelActivity"
-    tools:showIn="@layout/activity_luck_wheel">
+<layout>
 
-    <com.shenjiajun.customizeviewdemo.views.LuckyWheelView
-        android:id="@+id/lucky_wheel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:item_content_color="@color/grey_200"
-        app:item_title_color="@color/material_red_700"
-        app:line_color="@color/material_lightBlue_700"
-        app:selected_color="@color/material_white"
-        app:un_select_color="@color/amber_700" />
+    <data>
 
-    <Button
-        android:id="@+id/controler1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="转1" />
+        <variable
+            name="viewModel"
+            type="com.shenjiajun.customizeviewdemo.viewModels.LuckyWheelViewModel">
 
-    <Button
-        android:id="@+id/controler2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/controler1"
-        android:text="转5" />
+        </variable>
+    </data>
 
-    <Button
-        android:id="@+id/controler3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/controler2"
-        android:text="随机" />
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/content_luck_wheel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="com.shenjiajun.customizeviewdemo.LuckWheelActivity"
+        tools:showIn="@layout/activity_luck_wheel">
 
-    <Button
-        android:id="@+id/controler4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/controler3"
-        android:text="百分比" />
-</RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/percent_edit0"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:hint="百分比"
+                android:text='@{viewModel.percents[0]+""}'
+                android:textSize="14sp"
+                app:onTextChange="@{viewModel}" />
+
+            <EditText
+                android:id="@+id/percent_edit1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:hint="百分比"
+                android:text='@{viewModel.percents[1]+""}'
+                android:textSize="14sp"
+                app:onTextChange="@{viewModel}" />
+
+            <EditText
+                android:id="@+id/percent_edit2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:hint="百分比"
+                android:text='@{viewModel.percents[2]+""}'
+                android:textSize="14sp"
+                app:onTextChange="@{viewModel}" />
+
+            <EditText
+                android:id="@+id/percent_edit3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:hint="百分比"
+                android:text='@{viewModel.percents[3]+""}'
+                android:textSize="14sp"
+                app:onTextChange="@{viewModel}" />
+
+            <EditText
+                android:id="@+id/percent_edit4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:hint="百分比"
+                android:text='@{viewModel.percents[4]+""}'
+                android:textSize="14sp"
+                app:onTextChange="@{viewModel}" />
+
+            <EditText
+                android:id="@+id/percent_edit5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:hint="百分比"
+                android:text='@{viewModel.percents[5]+""}'
+                android:textSize="14sp"
+                app:onTextChange="@{viewModel}" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/controler1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:onClick="@{viewModel.onClick}"
+            android:text="转1" />
+
+        <Button
+            android:id="@+id/controler2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@id/controler1"
+            android:onClick="@{viewModel.onClick}"
+            android:text="转5" />
+
+        <Button
+            android:id="@+id/controler3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@id/controler2"
+            android:onClick="@{viewModel.onClick}"
+            android:text="随机" />
+
+        <Button
+            android:id="@+id/controler4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@id/controler3"
+            android:onClick="@{viewModel.onClick}"
+            android:text="百分比" />
+
+        <com.shenjiajun.customizeviewdemo.views.LuckyWheelView
+            android:id="@+id/lucky_wheel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            app:item_content_color="@color/grey_200"
+            app:item_title_color="@color/material_pink_700"
+            app:line_color="@color/material_lightBlue_700"
+            app:selected_color="@color/material_white"
+            app:un_select_color="@color/material_orange_700" />
+    </RelativeLayout>
+</layout>

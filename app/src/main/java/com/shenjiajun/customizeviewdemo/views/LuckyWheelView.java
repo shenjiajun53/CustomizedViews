@@ -229,16 +229,17 @@ public class LuckyWheelView extends View {
             float ringWidth = outRadius - intRadius;
 
 
-            RectF outRect = new RectF(viewWidth / 2 - outRadius, viewHeight / 2 - outRadius + circleStrokeWidth / 4, outRadius + viewWidth / 2, outRadius + viewHeight / 2);
+            RectF outRect = new RectF(viewWidth / 2 - outRadius, viewHeight / 2 - outRadius, outRadius + viewWidth / 2, outRadius + viewHeight / 2);
             RectF inRect = new RectF(0, 0, intRadius * 2, intRadius * 2);
 
-            canvas.drawCircle(viewWidth / 2, viewHeight / 2, outRadius, circleLinePaint);
-//            canvas.drawCircle(viewWidth / 2, viewHeight / 2, intRadius, intervalLinePaint);
             canvas.drawCircle(viewWidth / 2, viewHeight / 2, outRadius - 2, unSelectPiecePaint);
-
             if (!isRotationing) {
                 canvas.drawArc(outRect, 240, 60, true, selectedPiecePaint);
             }
+
+            canvas.drawCircle(viewWidth / 2, viewHeight / 2, outRadius, circleLinePaint);
+//            canvas.drawCircle(viewWidth / 2, viewHeight / 2, intRadius, intervalLinePaint);
+
 //            canvas.drawRect(outRect, intervalLinePaint);
 
             int awardsSize = awardsList.size();
@@ -267,7 +268,7 @@ public class LuckyWheelView extends View {
     }
 
     //根据每项百分比来转
-    public void startRotationByProbability() {
+    public void startPreSetRotation() {
         for (int i = 0; i < awardsList.size(); i++) {
             double randomResult = Math.random();
             if (randomResult < awardsList.get(i).getPercent()) {
@@ -278,7 +279,7 @@ public class LuckyWheelView extends View {
             }
         }
         //循环结局还是没击中，再来一波
-        startRotationByProbability();
+        startPreSetRotation();
 
     }
 
