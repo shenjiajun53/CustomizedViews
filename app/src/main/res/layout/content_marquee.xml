@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:background="@color/material_accentPink_a200"
         app:content_text_color="@color/material_white"
-        app:content_text_size="30sp" />
+        app:content_text_size="50sp" />
 
 
 </RelativeLayout>

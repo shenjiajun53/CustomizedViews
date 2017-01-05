@@ -30,7 +30,7 @@ public class MarqueeTextView extends TextView {
     private boolean isVerticalSwitch = true;
     private boolean isHorizontalScroll = true;
     private int verticalSwitchSpeed = 500;
-    private int verticalSwitchInterval = 2000;
+    private int verticalSwitchInterval = 3000;
     private int horizontalScrollSpeed = 1000;
     private int horizontalScrollInterval = 4000;
 
@@ -180,7 +180,7 @@ public class MarqueeTextView extends TextView {
 
 //        Logger.d("onMeasure viewWidth=" + viewWidth + " viewHeight=" + viewHeight);
 //        Logger.d("onMeasure widthSize=" + widthSize + " heightSize=" + heightSize);
-//        Logger.d("onMeasure maxWidth=" + maxWidth + " maxHeight=" + maxHeight);
+//        Logger.d("onMeasure maxWidth=" + maxContentWidth + " maxHeight=" + maxContentHeight);
 
         if (widthMode == MeasureSpec.EXACTLY && heightMode == MeasureSpec.EXACTLY) {
             setMeasuredDimension(widthSize, heightSize);
@@ -209,34 +209,41 @@ public class MarqueeTextView extends TextView {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (null != contentList && contentList.size() > 0) {
+        if (null != contentList && contentList.size() > 1) {
             if (currnetIndex >= contentList.size()) {
                 currnetIndex = 0;                        //播放完，循环
-//                isVerticalRunning = false;
             }
-//            Logger.d("onDraw viewWidth=" + viewWidth + " viewHeight=" + viewHeight);
-//            Logger.d("onDraw" + contentList);
-            String contentString = contentList.get(currnetIndex);
+            viewHeight = getMeasuredHeight();
+            viewWidth = getMeasuredWidth();
+            Logger.e("viewHeight=" + viewHeight / 2 + "maxContentHeight=" + maxContentHeight / 2);
+            String currentString = contentList.get(currnetIndex);
+            int nextIndex = currnetIndex + 1;
+            if (currnetIndex + 1 >= contentList.size()) {
+                nextIndex = 0;
+            }
+            String nextString = contentList.get(nextIndex);
 
             Rect contentBound = new Rect();
-            contentPaint.getTextBounds(contentString, 0, contentString.length(), contentBound);
+            contentPaint.getTextBounds(currentString, 0, currentString.length(), contentBound);
 //            Logger.d("contentBound top=" + contentBound.top + " bottom=" + contentBound.bottom + " \n  left=" + contentBound.left + " right=" + contentBound.right);
 //            Logger.d("contentBound height=" + contentBound.height() + " width=" + contentBound.width());
 
             contentWidth = contentBound.width();
             xOffset = (int) ((contentWidth - viewWidth) * 1.2);                 //文字超出View的部分。需要水平播放，另外加点留白
 
+            Paint.FontMetrics fontMetrics = contentPaint.getFontMetrics();
+            int textHeight = (int) ((-fontMetrics.ascent - fontMetrics.descent) / 2);
+            int textWholeHeight = (int) ((-fontMetrics.top - fontMetrics.bottom) / 2);
+//            Logger.e("textHeight=" + textHeight + " textWholeHeight=" + textWholeHeight);
 
+            yStartPos = viewHeight / 2 + maxContentHeight / 4 + textHeight / 4;
             if (!hasInited) {
                 hasInited = true;
-                currentY = viewHeight / 2 + maxContentHeight / 2;
-                isTextAtMiddle = true;
-            }
+                currentY = yStartPos;
 
-            if (isTextAtMiddle) {
-                yStartPos = viewHeight / 2 + maxContentHeight / 2;              //文字初始位置在view中间
-            } else {
-                yStartPos = viewHeight + viewHeight + maxContentHeight / 2;  //文字位置在View下方
+                Logger.d("top=" + fontMetrics.top + "  bottom=" + fontMetrics.bottom +
+                        " \n ascent=" + fontMetrics.ascent + " descent=" + fontMetrics.descent +
+                        " \n leading=" + fontMetrics.leading);
             }
 
 //            Logger.d("contentHeight=" + contentHeight);
@@ -247,20 +254,17 @@ public class MarqueeTextView extends TextView {
 
 
             if (!isVerticalRunning) {                        //垂直滚动
-//                Logger.d("start run");
                 isVerticalRunning = true;
-                if (isTextAtMiddle) {              //如果在中间，暂停一段时间，否则直接垂直滚动
-                    startVerticalInterval();
-                    if ((xOffset > 0) && !isHorizontalRunning) {
-                        isHorizontalRunning = true;
-                        startHorizontalScroll();
-                    }
-                } else {
-                    currnetX = 0;
-                    startVerticalSwitch();
+                startVerticalInterval();
+                if ((xOffset > 0) && !isHorizontalRunning) {
+                    isHorizontalRunning = true;
+                    startHorizontalScroll();
                 }
+                currnetX = 0;
+
             }
-            canvas.drawText(contentString, currnetX, currentY, contentPaint);
+            canvas.drawText(currentString, currnetX, currentY, contentPaint);
+            canvas.drawText(nextString, 0, currentY + viewHeight, contentPaint);
         }
     }
 
@@ -294,14 +298,10 @@ public class MarqueeTextView extends TextView {
             public void onAnimationUpdate(ValueAnimator animation) {
                 float value = (float) animation.getAnimatedValue();
                 if (value < 1) {
-                    currentY = (int) (yStartPos - value * viewHeight * 1.5);
+                    currentY = (int) (yStartPos - value * viewHeight * 1);
                 } else {
-                    if (isTextAtMiddle) {
-                        isTextAtMiddle = false;
-                        currnetIndex++;
-                    } else {
-                        isTextAtMiddle = true;
-                    }
+                    currnetIndex++;
+                    currentY = yStartPos;
 //                    Logger.e("y transition finished");
                     isVerticalRunning = false;
                 }
