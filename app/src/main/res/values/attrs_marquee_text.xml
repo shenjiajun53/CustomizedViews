@@ -13,5 +13,10 @@
         <attr name="content_text_size" format="dimension" />
         <!--内容文字大小-->
         <attr name="content_text_color" format="color" />
+
+        <attr name="content_single_text" format="string" />
+
+        <!--水平循环速度-->
+        <attr name="horizontal_loop_speed" format="integer" />
     </declare-styleable>
 </resources>

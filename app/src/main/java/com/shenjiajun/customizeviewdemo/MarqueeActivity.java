@@ -47,6 +47,7 @@ public class MarqueeActivity extends AppCompatActivity {
     private void initView() {
         marqueeTextView1 = (MarqueeTextView) findViewById(R.id.marquee_1);
         marqueeTextView1.setContentList(contentStringList);
+//        marqueeTextView1.setSingleText(viewNames[4]);
 
 //        marqueeTextView2 = (MarqueeTextView) findViewById(R.id.marquee_2);
 //        marqueeTextView2.setContentList(contentStringList);

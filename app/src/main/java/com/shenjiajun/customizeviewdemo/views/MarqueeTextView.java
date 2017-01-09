@@ -1,5 +1,7 @@
 package com.shenjiajun.customizeviewdemo.views;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -7,6 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -27,12 +30,21 @@ import java.util.TimerTask;
 public class MarqueeTextView extends TextView {
     private final String TAG = "MarqueeTextView";
     private ArrayList<String> contentList = new ArrayList<>();
+    private String singleText = "";
     private boolean isVerticalSwitch = true;
     private boolean isHorizontalScroll = true;
-    private int verticalSwitchSpeed = 500;
-    private int verticalSwitchInterval = 3000;
-    private int horizontalScrollSpeed = 1000;
-    private int horizontalScrollInterval = 4000;
+
+    private int DEFAULT_VERTICAL_SPEED = 500;
+    private int DEFAULT_VERTICAL_INTERVAL = 4000;
+    private int DEFAULT_HORIZONTAL_SPEED = 2000;
+    private int DEFAULT_HORIZONTAL_INTERVAL = 4000;
+    private int DEFAULT_HORIZONTAL_LOOP_SPEED = 6000;
+
+    private int verticalSwitchSpeed;
+    private int verticalSwitchInterval;
+    private int horizontalScrollSpeed;
+    private int horizontalScrollInterval;
+    private int horizontalLoopSpeed;
 
     private int viewHeight;
     private int viewWidth;
@@ -49,6 +61,7 @@ public class MarqueeTextView extends TextView {
     private int currnetX = 0; //文字的Y坐标
     private int xOffset = 0;//文字和view宽度差
     private int yStartPos = 0;//文字初始位置
+    private int xStartPos = 0;//文字初始位置
     private int currnetIndex = 0;
     private Paint contentPaint;
     private int contentWidth;
@@ -58,11 +71,16 @@ public class MarqueeTextView extends TextView {
     private boolean isHorizontalRunning = false;
     private boolean isVerticalRunning = false;
     private boolean isTextAtMiddle = true;
+    private boolean horizontalOriLeft = true;
 //    private int textPos = 0; //0,中间  1，上方  -1，下方
 
     public void setContentList(ArrayList<String> contentList) {
         this.contentList = contentList;
         postInvalidate();
+    }
+
+    public void setSingleText(String singleText) {
+        this.singleText = singleText;
     }
 
     public void setVerticalSwitch(boolean verticalSwitch) {
@@ -124,12 +142,14 @@ public class MarqueeTextView extends TextView {
 
     private void initAttrs(AttributeSet attrs) {
         TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.MarqueeTextView);
-        verticalSwitchSpeed = array.getInt(R.styleable.MarqueeTextView_vertical_switch_speed, 500);
-        verticalSwitchInterval = array.getInt(R.styleable.MarqueeTextView_vertical_switch_interval, 2000);
-        horizontalScrollSpeed = array.getInt(R.styleable.MarqueeTextView_horizontal_scroll_speed, 1000);
-        horizontalScrollInterval = array.getInt(R.styleable.MarqueeTextView_horizontal_scroll_interval, 4000);
+        verticalSwitchSpeed = array.getInt(R.styleable.MarqueeTextView_vertical_switch_speed, DEFAULT_VERTICAL_SPEED);
+        verticalSwitchInterval = array.getInt(R.styleable.MarqueeTextView_vertical_switch_interval, DEFAULT_VERTICAL_INTERVAL);
+        horizontalScrollSpeed = array.getInt(R.styleable.MarqueeTextView_horizontal_scroll_speed, DEFAULT_HORIZONTAL_SPEED);
+        horizontalScrollInterval = array.getInt(R.styleable.MarqueeTextView_horizontal_scroll_interval, DEFAULT_HORIZONTAL_INTERVAL);
+        horizontalLoopSpeed = array.getInt(R.styleable.MarqueeTextView_horizontal_loop_speed, DEFAULT_HORIZONTAL_LOOP_SPEED);
         contentColor = array.getColor(R.styleable.MarqueeTextView_content_text_color, Color.BLACK);
         contentTextSize = (int) array.getDimension(R.styleable.MarqueeTextView_content_text_size, Sp2Px(getContext(), 15));
+        singleText = (String) array.getString(R.styleable.MarqueeTextView_content_single_text);
 
 //        Logger.e("contentColor=" + contentColor);
 //        Logger.e("contentTextSize=" + contentTextSize);
@@ -176,6 +196,11 @@ public class MarqueeTextView extends TextView {
                 maxContentHeight = Math.max(maxContentHeight, tempHeight);
                 maxContentWidth = Math.max(maxContentWidth, tempWidth);
             }
+        } else if (!TextUtils.isEmpty(singleText)) {
+            Rect contentBound = new Rect();
+            contentPaint.getTextBounds(singleText, 0, singleText.length(), contentBound);
+            maxContentWidth = contentBound.width();
+            maxContentHeight = contentBound.height();
         }
 
 //        Logger.d("onMeasure viewWidth=" + viewWidth + " viewHeight=" + viewHeight);
@@ -215,7 +240,7 @@ public class MarqueeTextView extends TextView {
             }
             viewHeight = getMeasuredHeight();
             viewWidth = getMeasuredWidth();
-            Logger.e("viewHeight=" + viewHeight / 2 + "maxContentHeight=" + maxContentHeight / 2);
+
             String currentString = contentList.get(currnetIndex);
             int nextIndex = currnetIndex + 1;
             if (currnetIndex + 1 >= contentList.size()) {
@@ -225,9 +250,6 @@ public class MarqueeTextView extends TextView {
 
             Rect contentBound = new Rect();
             contentPaint.getTextBounds(currentString, 0, currentString.length(), contentBound);
-//            Logger.d("contentBound top=" + contentBound.top + " bottom=" + contentBound.bottom + " \n  left=" + contentBound.left + " right=" + contentBound.right);
-//            Logger.d("contentBound height=" + contentBound.height() + " width=" + contentBound.width());
-
             contentWidth = contentBound.width();
             xOffset = (int) ((contentWidth - viewWidth) * 1.2);                 //文字超出View的部分。需要水平播放，另外加点留白
 
@@ -241,19 +263,12 @@ public class MarqueeTextView extends TextView {
                 hasInited = true;
                 currentY = yStartPos;
 
-                Logger.d("top=" + fontMetrics.top + "  bottom=" + fontMetrics.bottom +
-                        " \n ascent=" + fontMetrics.ascent + " descent=" + fontMetrics.descent +
-                        " \n leading=" + fontMetrics.leading);
+//                Logger.d("top=" + fontMetrics.top + "  bottom=" + fontMetrics.bottom +
+//                        " \n ascent=" + fontMetrics.ascent + " descent=" + fontMetrics.descent +
+//                        " \n leading=" + fontMetrics.leading);
             }
 
-//            Logger.d("contentHeight=" + contentHeight);
-//            Logger.d("xOffset=" + xOffset);
-//            Logger.d("yStartPos=" + yStartPos);
-//            Logger.d("currentX=" + currnetX);
-//            Logger.d("currentY=" + currentY);
-
-
-            if (!isVerticalRunning) {                        //垂直滚动
+            if (!isVerticalRunning) {
                 isVerticalRunning = true;
                 startVerticalInterval();
                 if ((xOffset > 0) && !isHorizontalRunning) {
@@ -261,10 +276,34 @@ public class MarqueeTextView extends TextView {
                     startHorizontalScroll();
                 }
                 currnetX = 0;
-
             }
+
             canvas.drawText(currentString, currnetX, currentY, contentPaint);
             canvas.drawText(nextString, 0, currentY + viewHeight, contentPaint);
+        } else if (!TextUtils.isEmpty(singleText)) {
+            viewHeight = getMeasuredHeight();
+            viewWidth = getMeasuredWidth();
+            Rect contentBound = new Rect();
+            contentPaint.getTextBounds(singleText, 0, singleText.length(), contentBound);
+            contentWidth = contentBound.width();
+            xOffset = (int) ((contentWidth - viewWidth) * 1.2);                 //文字超出View的部分。需要水平播放，另外加点留白
+            Paint.FontMetrics fontMetrics = contentPaint.getFontMetrics();
+            int textHeight = (int) ((-fontMetrics.ascent - fontMetrics.descent) / 2);
+            int textWholeHeight = (int) ((-fontMetrics.top - fontMetrics.bottom) / 2);
+//            Logger.e("textHeight=" + textHeight + " textWholeHeight=" + textWholeHeight);
+            yStartPos = viewHeight / 2 + maxContentHeight / 4 + textHeight / 4;
+
+            if (!hasInited) {
+                hasInited = true;
+                currnetX = 0;
+                xStartPos = currnetX;
+            }
+
+            if ((xOffset > 0) && !isHorizontalRunning) {
+                isHorizontalRunning = true;
+                startHorizontalLoop();
+            }
+            canvas.drawText(singleText, currnetX, yStartPos, contentPaint);
         }
     }
 
@@ -275,13 +314,11 @@ public class MarqueeTextView extends TextView {
         verticalIntervalAnimator.setDuration(verticalSwitchInterval);
         verticalIntervalAnimator.setInterpolator(new LinearInterpolator());
         verticalIntervalAnimator.start();
-        verticalIntervalAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+        verticalIntervalAnimator.addListener(new AnimatorListenerAdapter() {
             @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                float value = (float) animation.getAnimatedValue();
-                if (value >= 1) {
-                    startVerticalSwitch();
-                }
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                startVerticalSwitch();
             }
         });
     }
@@ -297,14 +334,17 @@ public class MarqueeTextView extends TextView {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float value = (float) animation.getAnimatedValue();
-                if (value < 1) {
-                    currentY = (int) (yStartPos - value * viewHeight * 1);
-                } else {
-                    currnetIndex++;
-                    currentY = yStartPos;
-//                    Logger.e("y transition finished");
-                    isVerticalRunning = false;
-                }
+                currentY = (int) (yStartPos - value * viewHeight * 1);
+                postInvalidate();
+            }
+        });
+        verticalSwitchAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                currnetIndex++;
+                currentY = yStartPos;
+                isVerticalRunning = false;
                 postInvalidate();
             }
         });
@@ -319,11 +359,45 @@ public class MarqueeTextView extends TextView {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float value = (float) animation.getAnimatedValue();
-                if (value < 1) {
-                    currnetX = (int) (-xOffset * value);
-                } else {
-                    isHorizontalRunning = false;
-                }
+                currnetX = (int) (-xOffset * value);
+                postInvalidate();
+            }
+        });
+        horizontalScrollAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                isHorizontalRunning = false;
+                postInvalidate();
+            }
+        });
+    }
+
+    private void startHorizontalLoop() {
+        ValueAnimator horizontalScrollAnimator;
+        if (horizontalOriLeft) {
+            horizontalScrollAnimator = ValueAnimator.ofFloat(0, 1);
+        } else {
+            horizontalScrollAnimator = ValueAnimator.ofFloat(0, -1);
+        }
+        horizontalScrollAnimator.setDuration(horizontalLoopSpeed);
+        horizontalScrollAnimator.setInterpolator(new LinearInterpolator());
+        horizontalScrollAnimator.start();
+        horizontalScrollAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float value = (float) animation.getAnimatedValue();
+                currnetX = (int) (xStartPos - xOffset * value);
+                postInvalidate();
+            }
+        });
+        horizontalScrollAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                isHorizontalRunning = false;
+                horizontalOriLeft = !horizontalOriLeft;
+                xStartPos = currnetX;
                 postInvalidate();
             }
         });

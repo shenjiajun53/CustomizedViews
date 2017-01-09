@@ -18,6 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/material_accentPink_a200"
+        app:content_single_text="非i哦啊阿胶日哦价格i哦啊局i俄日哦啊进入爱哦就该瓯剧uiobtuab"
         app:content_text_color="@color/material_white"
         app:content_text_size="50sp" />
 
