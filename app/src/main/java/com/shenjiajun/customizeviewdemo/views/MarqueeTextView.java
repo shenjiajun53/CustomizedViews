@@ -76,11 +76,13 @@ public class MarqueeTextView extends TextView {
 
     public void setContentList(ArrayList<String> contentList) {
         this.contentList = contentList;
+        requestLayout();
         postInvalidate();
     }
 
     public void setSingleText(String singleText) {
         this.singleText = singleText;
+        requestLayout();
     }
 
     public void setVerticalSwitch(boolean verticalSwitch) {
