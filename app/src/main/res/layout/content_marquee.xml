@@ -18,9 +18,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/material_accentPink_a200"
-        app:content_single_text="非i哦啊阿胶日哦价格i哦啊局i俄日哦啊进入爱哦就该瓯剧uiobtuab"
+        app:content_single_text="非i哦啊阿胶日该瓯的发射瓯的发射点发的发射大富大瓯的发射点发的发射大富大瓯的发射点发的发射大富大点发的发射大富大的发射点发大师傅大是大非撒的发射点发德斯发射的发射点剧uiobtuab"
         app:content_text_color="@color/material_white"
-        app:content_text_size="50sp" />
+        app:content_text_size="22sp" />
 
 
 </RelativeLayout>

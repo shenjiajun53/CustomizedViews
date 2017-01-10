@@ -16,11 +16,16 @@ public class MarqueeActivity extends AppCompatActivity {
     private MarqueeTextView marqueeTextView1, marqueeTextView2;
     private ArrayList<String> contentStringList = new ArrayList<>();
     private String[] viewNames =
-            {"WaveView达到撒旦法反对反对撒", "CircleImageView", "ScratchView"
-                    , "自定义ViewGroup", "DragHelperView方大苏打撒旦发射的的覆盖辅导费", "自定义Drawer"
-                    , "自定义下拉", "GradientTextView股份过户费工夫呼庚呼癸规范化", "自定义双向跑马灯"
-
-                    , "to be continue"};
+            {"自定义双向跑马灯"
+                    , "jgiorejiojiojfvioaerjrioajrioejbio[j[abioja[oijbaeiorjbi[rojifjlkadjfl;kjakdfbj;klfdj"
+                    , "第三方个地方司法"
+                    , "紧凑i阿娇次日哦啊级点击aid及orv季度佛啊睡觉哦i发啊日记哦ivsdjckljerjr哦 京东方卡巨幅i哦的卡局"
+                    , "家供热计量空间克隆揭开了艰苦艰苦环境开会进口氯化钾开会艰苦环境开会了就快乐健康就好了空间花见花开了就环境开会了空间和空间"
+                    , "自定义Drawer"
+                    , "的发射点发发射点发大是大非大厦发生放大发送"
+                    , "GradientTe阿德斯发射点发xtView股份过户费工夫呼庚呼癸规范化"
+                    , "还是让他黑色的风格"
+                    , "to be as的发射点发大师傅大厦发生的"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
