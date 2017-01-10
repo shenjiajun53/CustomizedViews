@@ -35,10 +35,10 @@ public class MarqueeTextView extends TextView {
     private boolean isHorizontalScroll = true;
 
     private int DEFAULT_VERTICAL_SPEED = 500;
-    private int DEFAULT_VERTICAL_INTERVAL = 3500;
-    private int DEFAULT_HORIZONTAL_SPEED = 200;     //滚动每个字的时间
+    private int DEFAULT_VERTICAL_INTERVAL = 1000;
+    private int DEFAULT_HORIZONTAL_SPEED = 100;     //滚动每个字的时间
     private int DEFAULT_HORIZONTAL_INTERVAL = 4000;
-    private int DEFAULT_HORIZONTAL_LOOP_SPEED = 200;  //滚动每个字的时间
+    private int DEFAULT_HORIZONTAL_LOOP_SPEED = 100;  //滚动每个字的时间
 
     private int verticalSwitchSpeed;
     private int verticalSwitchInterval;
@@ -253,7 +253,7 @@ public class MarqueeTextView extends TextView {
             Rect contentBound = new Rect();
             contentPaint.getTextBounds(currentString, 0, currentString.length(), contentBound);
             contentWidth = contentBound.width();
-            xOffset = (contentWidth - viewWidth) + contentTextSize * 2;                 //文字超出View的部分。需要水平播放，另外加点留白.设留白两个字宽
+            xOffset = contentWidth - viewWidth;                 //文字超出View的部分。需要水平播放
 
             Paint.FontMetrics fontMetrics = contentPaint.getFontMetrics();
             int textHeight = (int) ((-fontMetrics.ascent - fontMetrics.descent) / 2);
@@ -270,7 +270,8 @@ public class MarqueeTextView extends TextView {
 //                        " \n leading=" + fontMetrics.leading);
             }
 
-            if ((xOffset > 0)) {
+            if (xOffset > 0) {
+                xOffset += contentTextSize * 2;   //另外加点留白.设留白两个字宽
                 if (!isHorizontalRunning && !isVerticalRunning) {
                     isHorizontalRunning = true;
                     startHorizontalScroll();
@@ -292,7 +293,7 @@ public class MarqueeTextView extends TextView {
             Rect contentBound = new Rect();
             contentPaint.getTextBounds(singleText, 0, singleText.length(), contentBound);
             contentWidth = contentBound.width();
-            xOffset = (contentWidth - viewWidth) + contentTextSize * 2;                 //文字超出View的部分。需要水平播放，另外加点留白
+            xOffset = contentWidth - viewWidth;
             Paint.FontMetrics fontMetrics = contentPaint.getFontMetrics();
             int textHeight = (int) ((-fontMetrics.ascent - fontMetrics.descent) / 2);
             int textWholeHeight = (int) ((-fontMetrics.top - fontMetrics.bottom) / 2);
@@ -305,9 +306,12 @@ public class MarqueeTextView extends TextView {
                 xStartPos = currnetX;
             }
 
-            if ((xOffset > 0) && !isHorizontalRunning) {
-                isHorizontalRunning = true;
-                startHorizontalLoop();
+            if (xOffset > 0) {
+                xOffset += contentTextSize * 2;
+                if (!isHorizontalRunning) {
+                    isHorizontalRunning = true;
+                    startHorizontalLoop();
+                }
             }
             canvas.drawText(singleText, currnetX, yStartPos, contentPaint);
         }
