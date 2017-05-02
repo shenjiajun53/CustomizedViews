@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
             {"WaveView", "CircleImageView", "ScratchView"
                     , "自定义ViewGroup", "DragHelperView", "自定义Drawer"
                     , "自定义下拉", "GradientTextView", "自定义双向跑马灯"
-                    , "幸运转盘"
+                    , "幸运转盘", "划线TextView"
                     , "to be continue"};
     MyAdapter myAdapter;
 
@@ -133,6 +133,10 @@ public class MainActivity extends AppCompatActivity {
                             break;
                         case 9:
                             intent = new Intent(MainActivity.this, LuckWheelActivity.class);
+                            startActivity(intent);
+                            break;
+                        case 10:
+                            intent = new Intent(MainActivity.this, StrikeActivity.class);
                             startActivity(intent);
                             break;
                         default:
