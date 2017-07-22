@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CouponView">
+
+        <attr name="background_color" format="color" />
+        <attr name="title_text_size" format="dimension" />
+        <attr name="title_text" format="string" />
+        <attr name="corner_radius" format="dimension" />
+    </declare-styleable>
+</resources>

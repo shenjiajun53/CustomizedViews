@@ -61,6 +61,10 @@
         <activity
             android:name=".LuckWheelActivity"
             android:label="@string/title_activity_luck_wheel"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CouponActivity"
+            android:label="@string/title_activity_coupon"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
