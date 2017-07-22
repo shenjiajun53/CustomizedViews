@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="StrikeTextView">
+        <attr name="strike_line_width" format="dimension" />
+        <attr name="strike_line_color" format="color" />
+        <attr name="strike_left_padding" format="dimension" />
+        <attr name="strike_right_padding" format="dimension" />
+        <attr name="strike_type" format="enum">
+            <enum name="under_strike" value="0" />
+            <enum name="middle_strike" value="1" />
+            <enum name="oblique_strike" value="2" />
+        </attr>
+    </declare-styleable>
+</resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.shenjiajun.customizeviewdemo.StrikeActivity"
+    tools:showIn="@layout/activity_strike">
+
+    <com.shenjiajun.customizeviewdemo.views.StrikeTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="abc"
+        android:textSize="70sp"
+        app:strike_left_padding="5dp"
+        app:strike_line_color="@color/colorAccent"
+        app:strike_line_width="4.5dp"
+        app:strike_right_padding="5dp"
+        app:strike_type="oblique_strike" />
+</RelativeLayout>

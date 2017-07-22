@@ -12,5 +12,6 @@
     <string name="title_activity_nested_behavior">NestedBehaviorActivity</string>
     <string name="title_activity_marquee">MarqueeActivity</string>
     <string name="title_activity_luck_wheel">LuckWheelActivity</string>
+    <string name="title_activity_strike">StrikeActivity</string>
     <string name="title_activity_coupon">CouponActivity</string>
 </resources>

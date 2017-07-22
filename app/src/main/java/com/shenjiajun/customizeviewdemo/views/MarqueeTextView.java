@@ -362,6 +362,11 @@ public class MarqueeTextView extends TextView {
 
     private void startHorizontalScroll() {
         ValueAnimator horizontalScrollAnimator = ValueAnimator.ofFloat(0, 1);
+        //在崩溃统计上看到值<0的bug
+        if (horizontalScrollSpeed * xOffset / contentTextSize < 0) {
+            isHorizontalRunning = false;
+            return;
+        }
         horizontalScrollAnimator.setDuration(horizontalScrollSpeed * xOffset / contentTextSize);
         horizontalScrollAnimator.setInterpolator(new LinearInterpolator());
         horizontalScrollAnimator.start();
@@ -393,6 +398,10 @@ public class MarqueeTextView extends TextView {
             horizontalScrollAnimator = ValueAnimator.ofFloat(0, 1);
         } else {
             horizontalScrollAnimator = ValueAnimator.ofFloat(0, -1);
+        }
+        if (horizontalScrollSpeed * xOffset / contentTextSize < 0) {
+            isHorizontalRunning = false;
+            return;
         }
         horizontalScrollAnimator.setDuration(horizontalLoopSpeed * xOffset / contentTextSize);
         horizontalScrollAnimator.setInterpolator(new LinearInterpolator());
