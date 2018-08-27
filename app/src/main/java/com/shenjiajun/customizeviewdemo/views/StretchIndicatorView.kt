@@ -25,11 +25,36 @@ class StretchIndicatorView : View {
         }
 
     var selectColor = Color.WHITE
+        set(value) {
+            field = value
+            init()
+            postInvalidate()
+        }
+
     var unSelectColor = Color.GRAY
+        set(value) {
+            field = value
+            init()
+            postInvalidate()
+        }
     var radius = context.dip(5).toFloat()
+        set(value) {
+            field = value
+            init()
+            postInvalidate()
+        }
     var indicatorPadding = context.dip(5)
+        set(value) {
+            field = value
+            init()
+            postInvalidate()
+        }
 
     var showMiddleLine = true
+        set(value) {
+            field = value
+            postInvalidate()
+        }
 
     private lateinit var selectPaint: Paint
     private lateinit var unselectPaint: Paint
