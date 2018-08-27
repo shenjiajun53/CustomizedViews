@@ -14,4 +14,5 @@
     <string name="title_activity_luck_wheel">LuckWheelActivity</string>
     <string name="title_activity_strike">StrikeActivity</string>
     <string name="title_activity_coupon">CouponActivity</string>
+    <string name="title_activity_indicator">IndicatorActivity</string>
 </resources>

@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CustomizedViews.iml" filepath="$PROJECT_DIR$/CustomizedViews.iml" />
+      <module fileurl="file://D:\MyProjects\AndroidProjects\CustomizedViews\CustomizedViews.iml" filepath="D:\MyProjects\AndroidProjects\CustomizedViews\CustomizedViews.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://D:\MyProjects\AndroidProjects\CustomizedViews\app\app.iml" filepath="D:\MyProjects\AndroidProjects\CustomizedViews\app\app.iml" />
     </modules>
   </component>
 </project>

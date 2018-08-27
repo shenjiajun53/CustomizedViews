@@ -69,6 +69,10 @@
         <activity
             android:name=".CouponActivity"
             android:label="@string/title_activity_coupon"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".IndicatorActivity"
+            android:label="@string/title_activity_indicator"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

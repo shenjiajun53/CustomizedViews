@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
                     , "自定义ViewGroup", "DragHelperView", "自定义Drawer"
                     , "自定义下拉", "GradientTextView", "自定义双向跑马灯"
                     , "幸运转盘", "划线TextView"
-                    ,"优惠券View"
+                    , "优惠券View", "PageIndicator"
                     , "to be continue"};
     MyAdapter myAdapter;
 
@@ -142,6 +142,10 @@ public class MainActivity extends AppCompatActivity {
                             break;
                         case 11:
                             intent = new Intent(MainActivity.this, CouponActivity.class);
+                            startActivity(intent);
+                            break;
+                        case 12:
+                            intent = new Intent(MainActivity.this, IndicatorActivity.class);
                             startActivity(intent);
                             break;
                         default:
